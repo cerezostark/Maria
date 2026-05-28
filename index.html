@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños!</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fuente cursiva elegante para el letrero -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Pantalla de inicio para activar el audio -->
+    <div id="pantalla-inicio">
+        <h1>Tengo una sorpresa para ti...</h1>
+        <button id="btn-abrir">Abrir Regalo 🎁</button>
+    </div>
+
+    <!-- Contenido principal (Oculto al principio) -->
+    <div id="contenido-principal" class="oculto">
+        <div class="letrero">
+            <h1>¡Feliz Cumpleaños!</h1>
+            <p>Espero que tengas un día tan increíble como tú.</p>
+        </div>
+    </div>
+
+    <!-- Audio de fondo -->
+    <audio id="musica-fondo" loop>
+        <source src="assets/cancion.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
