@@ -3,33 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Feliz Cumpleaños!</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Fuente cursiva elegante para el letrero -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <title>Para Alguien Muy Especial ✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #fff0f5; 
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .background-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at 30% 30%, #ffebf0 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, #ffe4e1 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .petal {
+            position: absolute;
+            background: linear-gradient(135deg, #ffb7c5, #ff8da1);
+            border-radius: 50% 0 50% 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 2;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(105vh) rotate(720deg) translateX(100px); opacity: 0; }
+        }
+
+        .card-container {
+            position: relative;
+            width: 90%;
+            max-width: 450px;
+            height: 500px;
+            z-index: 10;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(221, 160, 221, 0.2);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: scale(0.9) translateY(30px);
+            pointer-events: none;
+        }
+
+        .card.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .tulip-icon { width: 60px; height: 70px; margin-bottom: 25px; position: relative; display: inline-block; }
+        .tulip-center { width: 30px; height: 50px; background: #ff6b8b; border-radius: 25px 25px 0 0; position: absolute; left: 15px; bottom: 20px; z-index: 2; }
+        .tulip-left { width: 25px; height: 45px; background: #ff4f73; border-radius: 25px 0 0 25px; position: absolute; left: 3px; bottom: 20px; transform: rotate(-15deg); z-index: 1; }
+        .tulip-right { width: 25px; height: 45px; background: #ff4f73; border-radius: 0 25px 25px 0; position: absolute; right: 3px; bottom: 20px; transform: rotate(15deg); z-index: 1; }
+        .tulip-stem { width: 4px; height: 25px; background: #8ed9a3; position: absolute; left: 28px; bottom: 0; }
+
+        h1 { font-family: 'Pacifico', cursive; color: #d81b60; font-size: 2.3rem; margin-bottom: 15px; line-height: 1.3; }
+        h2 { font-size: 1.8rem; color: #c2185b; margin-bottom: 15px; font-weight: 600; }
+        p { color: #5c5a60; font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
+
+        .btn {
+            background: linear-gradient(135deg, #ff6b8b, #d81b60);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 27, 96, 0.4); }
+
+        .audio-indicator { position: absolute; bottom: 20px; font-size: 0.85rem; color: #b0aeb4; display: flex; align-items: center; gap: 8px; opacity: 0; transition: opacity 0.5s; }
+        .audio-indicator.visible { opacity: 1; }
+        .music-wave { display: flex; gap: 3px; }
+        .music-wave span { width: 3px; height: 12px; background-color: #ff6b8b; animation: bounce 0.5s infinite alternate; }
+        .music-wave span:nth-child(2) { animation-delay: 0.15s; }
+        .music-wave span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes bounce { from { height: 4px; } to { height: 14px; } }
+    </style>
 </head>
 <body>
 
-    <!-- Pantalla de inicio para activar el audio -->
-    <div id="pantalla-inicio">
-        <h1>Tengo una sorpresa para ti...</h1>
-        <button id="btn-abrir">Abrir Regalo 🎁</button>
-    </div>
+    <div class="background-glow"></div>
 
-    <!-- Contenido principal (Oculto al principio) -->
-    <div id="contenido-principal" class="oculto">
-        <div class="letrero">
+    <audio id="bg-music" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card-container">
+        <div class="card active" id="card-0">
+            <div class="tulip-icon">
+                <div class="tulip-left"></div><div class="tulip-center"></div><div class="tulip-right"></div><div class="tulip-stem"></div>
+            </div>
+            <h2>Hola, tengo algo para ti...</h2>
+            <p>Preparé una pequeña sorpresa. Por favor, asegúrate de tener el volumen activado antes de abrirla.</p>
+            <button class="btn" onclick="startExperience()">Abrir Sorpresa 🎁</button>
+        </div>
+
+        <div class="card" id="card-1">
             <h1>¡Feliz Cumpleaños!</h1>
-            <p>Espero que tengas un día tan increíble como tú.</p>
+            <p>Hoy celebramos tu vida. Quería darte un detalle diferente que combine flores que no se marchitan y unas palabras sinceras para ti.</p>
+            <button class="btn" onclick="nextCard(1)">Continuar ✨</button>
+        </div>
+
+        <div class="card" id="card-2">
+            <div class="tulip-icon" style="transform: scale(0.8);">
+                <div class="tulip-left"></div><div class="tulip-center"></div><div class="tulip-right"></div><div class="tulip-stem"></div>
+            </div>
+            <h2>Eres increíble</h2>
+            <p>Admiro muchísimo la persona que eres, tu autenticidad y tu luz. Tienes una forma de ser que se queda grabada en el corazón de quienes te conocen.</p>
+            <button class="btn" onclick="nextCard(2)">Siguiente ➔</button>
+        </div>
+
+        <div class="card" id="card-3">
+            <h2>Pensando en nosotros...</h2>
+            <p>Perdona por siempre tratarte así, si a veces soy un poco torpe o insistente. Mi intención es cuidarte y sacarte una sonrisa, porque realmente me importas.</p>
+            <button class="btn" onclick="nextCard(3)">Siguiente ➔</button>
+        </div>
+
+        <div class="card" id="card-4">
+            <h2>Mis deseos más sinceros</h2>
+            <p>Me gustaría ser tu amigo, apoyarte en tus proyectos y compartir risas juntos. Creo que lo mejor empieza cuidando el presente y me encanta tenerte en mi vida.</p>
+            <button class="btn" onclick="nextCard(4)">Siguiente ➔</button>
+        </div>
+
+        <div class="card" id="card-5">
+            <h1>Disfruta tu día 🌷</h1>
+            <p>Espero que estos tulipanes digitales te recuerden lo mucho que mereces sonreír. Que pases un cumpleaños hermoso, lleno de luz.</p>
+            <p style="font-family: 'Pacifico', cursive; color: #ff6b8b; font-size: 1.4rem; margin-top: -10px;">¡Feliz vida!</p>
         </div>
     </div>
 
-    <!-- Audio de fondo -->
-    <audio id="musica-fondo" loop>
-        <source src="assets/cancion.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
+    <div class="audio-indicator" id="audio-tag">
+        <div class="music-wave"><span></span><span></span><span></span></div>
+        <span>Escuchando música ♪</span>
+    </div>
 
-    <script src="script.js"></script>
+    <script>
+        function nextCard(currentId) {
+            const currentCard = document.getElementById(`card-${currentId}`);
+            const nextCard = document.getElementById(`card-${currentId + 1}`);
+            if (currentCard && nextCard) {
+                currentCard.classList.remove('active');
+                nextCard.classList.add('active');
+            }
+        }
+
+        function startExperience() {
+            const music = document.getElementById('bg-music');
+            music.play().then(() => {
+                document.getElementById('audio-tag').classList.add('visible');
+            }).catch(err => console.log("Audio en espera"));
+
+            setInterval(createPetal, 300);
+            nextCard(0);
+        }
+
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            const randomLeft = Math.random() * window.innerWidth;
+            const randomSize = Math.random() * 15 + 15;
+            const randomDuration = Math.random() * 3 + 4;
+            const randomRotation = Math.random() * 360;
+
+            petal.style.left = `${randomLeft}px`;
+            petal.style.width = `${randomSize}px`;
+            petal.style.height = `${randomSize * 1.3}px`;
+            petal.style.animationDuration = `${randomDuration}s`;
+            petal.style.transform = `rotate(${randomRotation}deg)`;
+            
+            const colors = ['linear-gradient(135deg, #ffb7c5, #ff8da1)', 'linear-gradient(135deg, #ffc0cb, #ff6b8b)'];
+            petal.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), randomDuration * 1000);
+        }
+    </script>
 </body>
 </html>
